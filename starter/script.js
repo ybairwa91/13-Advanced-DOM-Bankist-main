@@ -93,6 +93,8 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
+
+
 ///////////////////////////////
 //////////////////////////////
 /*
