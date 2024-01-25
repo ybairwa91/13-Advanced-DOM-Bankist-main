@@ -3,12 +3,15 @@
 ///////////////////////////////////////
 // Modal window
 
+//selection
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
+const nav = document.querySelector('.nav');
 const section1 = document.querySelector('#section--1');
+//functions
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -79,21 +82,27 @@ tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
   //stop click outside of tab
   //Guard clause
-  console.log(clicked);
   if (!clicked) return;
-  //active tab
+  // console.log(clicked);
+  //remove classes
+  //
   tabs.forEach(ele => {
-    ele.classList.remove('opearations__tab--active');
+    ele.classList.remove('operations__tab--active');
   });
-  clicked.classList.add('opearations__tab--active');
+  //
+  tabsContent.forEach(c => {
+    c.classList.remove('operations__content--active');
+    // console.log('hi');
+  });
 
-  //Active content area
+  //active tab
+  clicked.classList.add('operations__tab--active');
+  //Activate content area
+  // console.log(clicked.dataset.tab);
   document
-    .querySelector(`operations__content--${clicked.dataset.tab}`)
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
-
-
 
 ///////////////////////////////
 //////////////////////////////
@@ -426,4 +435,24 @@ document.querySelector('.nav').addEventListener(
   );
   */
 
-//EVENT DELEGATION:IMPLEMENTING PAGE NAVIGATION
+//Passing arguments to event handler
+
+//Menu fade animation
+const handleHover = function (e, opacity) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = opacity;
+    });
+    logo.style.opacity = opacity;
+  }
+};
+nav.addEventListener('mouseover', function (e) {
+  handleHover(e, 0.5);
+});
+nav.addEventListener('mouseout', function (e) {
+  handleHover(e, 1);
+});
