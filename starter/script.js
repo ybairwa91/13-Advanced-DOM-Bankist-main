@@ -613,15 +613,22 @@ allSections.forEach(function (section) {
 const imgTargets = document.querySelectorAll('img[data-src]');
 const loadImg = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
+  // console.log(entry);
   if (!entry.isIntersecting) return;
   //Replace the src to data-src of img tag
   entry.target.src = entry.target.dataset.src;
   entry.target.classList.remove('lazy-img');
   entry.target.addEventListener('load', function () {});
+
+  //stop observing now
+  observer.unobserve(entry.target);
 };
 const imgObserver = new IntersectionObserver(loadImg, {
   root: null,
-  threshold: 0.1,
+  threshold: 0,
+  rootMargin: '200px',
 });
 imgTargets.forEach(img => imgObserver.observe(img));
+
+
+//building slider using dom
